@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-set -o errexit -o nounset -o pipefail
+#set -o errexit -o nounset -o pipefail
+set -eo pipefail
 
 function usage() {
   >&2 cat << EOF
@@ -17,7 +18,8 @@ EOF
 }
 
 for envvar in INSTALL_REGISTRY_USERNAME INSTALL_REGISTRY_PASSWORD INSTALL_REGISTRY_HOSTNAME GIT_SSH_PRIVATE_KEY GIT_KNOWN_HOSTS AGE_KEY ; do
-  if [[ ! -v ${envvar} ]]; then
+  echo "${envvar}"
+  if [[ -z ${envvar} ]]; then
     usage
     >&2 echo "Expected env var ${envvar} to be set, but was not."
     exit 1
